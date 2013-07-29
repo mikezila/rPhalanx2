@@ -8,7 +8,7 @@ class Level1 < GameState
     @objects.push(@hud)
     @objects.push(@bg)
     @objects.push(@player)
-    self.place_enemy
+    self.place_enemy # Setup our test enemies.
   end
 
   def button_down(id)
@@ -43,6 +43,7 @@ class Level1 < GameState
   end
 
   def place_enemy
+    # These dummies are just for testing, they stand and fire, nothing else.
     self.objects.push(Enemy.new(self,450,140))
     self.objects.push(Enemy.new(self,450,180))
     self.objects.push(Enemy.new(self,450,220))

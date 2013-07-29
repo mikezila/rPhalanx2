@@ -1,3 +1,5 @@
+# This gamestate is just a dummy, an empty, scrolling background.  Just to test gamestates were working, which they are.
+
 class Level2 < GameState
   def initialize(window)
     super window

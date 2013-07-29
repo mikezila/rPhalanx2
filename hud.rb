@@ -1,3 +1,5 @@
+# This Hud class isn't updated from the outside, instead it evaluates the objects in the game and displays information itself.  Makes good use of tags to find and get info from gameobjects.
+
 class Hud < GameObject
 
   def initialize(game)
@@ -5,15 +7,18 @@ class Hud < GameObject
     @window = self.game.window
     @font = Gosu::Font.new(@window,"./gfx/AGENCYR.ttf",26)
     @tags.push("hud")
-    @boost = 2
-    @shots = 0
-    @enemies = 0
-    @health = 3
   end
 
   def update
-    @shots = 0
+    @player_shots = 0
+    @enemy_shots = 0
     @enemies = 0
+
+    self.game.objects.each do |object|
+      if object.tags.include? "enemy_shot"
+        @enemy_shots += 1
+      end
+    end
 
     self.game.objects.each do |object|
       if object.tags.include? "enemy_ship"
@@ -23,7 +28,7 @@ class Hud < GameObject
 
     self.game.objects.each do |object|
       if object.tags.include? "player_shot"
-        @shots += 1
+        @player_shots += 1
       end
     end
 
@@ -41,8 +46,9 @@ class Hud < GameObject
   end
 
   def draw
-    @font.draw("Boost factor: #{@boost} Live player shots: #{@shots} Live enemies: #{@enemies}", 10, 10, 2) if DEBUG
-    @font.draw("Health: #{@health}", 10, 28, 2) if DEBUG
+    # Since this is all debugging information, only display it if DEBUG is on.
+    @font.draw("Boost factor: #{@boost} Live player shots: #{@player_shots} Live enemies: #{@enemies}", 10, 10, 2) if DEBUG
+    @font.draw("Health: #{@health} Live enemy shots: #{@enemy_shots}", 10, 28, 2) if DEBUG
     @font.draw("DEBUG MODE", 20, @window.height - 30, 2) if DEBUG
     @font.draw("fps: #{Gosu::fps}", @window.width - 80, @window.height - 30, 2) if DEBUG
   end

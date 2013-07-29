@@ -5,6 +5,7 @@ def debug(message)
   puts "#{Time.now.strftime("%H:%M:%S.%L")} - \t#{message}" if DEBUG
 end
 
+# All objects in the game extend from this class, without exception.  The tags array contains strings that describe the object, and are used to find it and objects like it when doing callbacks on all objects.  This makes it easy to send callbacks to some gameobjects, but not others, and to interact with all objects or just the ones you want without having to keep seperate arrays or use controller classes for each time.
 class GameObject
 
   attr_reader :game
@@ -27,6 +28,8 @@ class GameObject
   end
 end
 
+
+#All game objects are pushed into the "objects" array, without exception.  All objects in this array have update and draw called on them, and are deleted if they have their "deleted?" flag set.  I also store references to the Gosu window and the objects array for ease of making new graphics and so that objects can do callbacks on all other objects via self.game.objects
 class GameState
 
   attr_reader :objects

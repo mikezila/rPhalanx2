@@ -19,21 +19,20 @@ class Shot < GameObject
   end
 
   def update
-    @speed.times do
+    # An angle is passed when a shot is created, and this makes sure that the bullet follows that angle.
+    @speed.times do # So that speed can be controlled, but we can still rely on pixle-perfect movement.
       @x += Gosu::offset_x(@angle, 1)
       @y += Gosu::offset_y(@angle, 1)
     end
   
-    if self.x > self.game.window.width or self.x < 0 or self.y > self.game.window.height or self.y < 0 or self.deleted?
+    # This marks any bulle that has flown off the visible area as deleted, meaning it'll be destroyed next update cycle.
+    if self.x > self.game.window.width or self.x < 0 or self.y > self.game.window.height or self.y < 0
       @deleted = true
     end
   end
 
   def draw
+    # The simplest draw that there ever was.  Since all of the movement is handled above, just need to draw at x and y and done.
     @gfx.draw(@x,@y,1)
-  end
-
-  def to_s
-    return "X:#{@x} Y:#{@y}"
   end
 end

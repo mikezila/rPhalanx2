@@ -16,15 +16,18 @@ class Player < GameObject
     @x = self.game.window.width / 4
     @y = self.game.window.height / 2
     @prev_shot = 0
+    @shots_budget = 4
   end
 
+  # Looks complicated, but isn't.  Lets us fire every 60 milliseconds, but only if we're under budget for how many shots we're allowed.
   def fire
     if Gosu::milliseconds - @prev_shot > 60
-      self.game.objects.push(Shot.new(self.game,"player_shot",@gfx_shot,@x+22,@y+6,90,10)) unless @live_shots > 3
+      self.game.objects.push(Shot.new(self.game,"player_shot",@gfx_shot,@x+22,@y+6,90,10)) unless @live_shots >= @shots_budget
       @prev_shot = Gosu::milliseconds
     end
   end
 
+  # This is called whenever there are no movement buttons held down, so that the ship returns to a neutral position after animating going up/down.
   def rest
     if @state > 2
       @state -= 1
@@ -33,6 +36,7 @@ class Player < GameObject
     end
   end
 
+  # Keep track of the number of live player shots, so we can throttle how many we're allowed at once.
   def update
     @live_shots = 0
     self.game.objects.each do |object|
@@ -42,6 +46,7 @@ class Player < GameObject
     end
   end
 
+  # This cycles our boost between three levels.
   def boost_change
     if @boost == 4
       @boost = 2
@@ -50,6 +55,7 @@ class Player < GameObject
     end
   end
 
+  # Some pretty simple movement methods.
   def up
     @state -= 1 unless @state == 0
     @y -= 1 * @boost

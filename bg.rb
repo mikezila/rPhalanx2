@@ -1,9 +1,6 @@
-class Background < GameObject
+# These two classes form a pretty basic but extensible paralax background scroller.  Simple, but works pretty well.
 
-  attr_accessor :x
-  attr_accessor :y
-  attr_accessor :scroll_speed
-  attr_accessor :paralax
+class Background < GameObject
 
   def initialize(game)
     super game
@@ -12,8 +9,6 @@ class Background < GameObject
     gfx2 = Gosu::Image.new(window,"./gfx/bg2.png",false)
     gfx3 = Gosu::Image.new(window,"./gfx/bg3.png",false)
     @x = @y = 0
-    @scroll_speed = 2
-    @paralax = true
 
     @layers = Array.new
     @layers.push Layer.new(0,0,gfx1,1)
