@@ -14,7 +14,7 @@ Just Ruby and the Gosu gem.  If you're on Windows use Ruby 1.9.3, as Gosu doesn'
 
      gem install gosu
 
-I presume it'll work on Ruby 2.0 as well if you're using OS X or Linux, but I haven't tested it.
+I presume it'll work on Ruby 2.0 as well if you're using OS X or Linux, but I haven't tested it.  Windows users can use the .exe as well, which can be used even if you don't have Ruby and Gosu installed.
 
 ## Known Issues
 I don't do resource loading like I should, so it might not work for you due to working directory nonsense.  Sorry.  I'll fix that at some point.  If you use the included .exe on Windows it'll probably work fine.
