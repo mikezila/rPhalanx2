@@ -14,10 +14,10 @@ Just Ruby and the Gosu gem.  If you're on Windows use Ruby 1.9.3, as Gosu doesn'
 
      gem install gosu
 
-I presume it'll work on Ruby 2.0 as well if you're using OS X or Linux, but I haven't tested it.  Windows users can use the .exe as well, which can be used even if you don't have Ruby and Gosu installed.
+I presume it'll work on Ruby 2.0 as well if you're using OS X or Linux, but I haven't tested it.
 
 ## Known Issues
-I don't do resource loading like I should, so it might not work for you due to working directory nonsense.  Sorry.  I'll fix that at some point.  If you use the included .exe on Windows it'll probably work fine.
+I don't do resource loading like I should, so it might not work for you due to working directory nonsense.  Sorry.  I'll fix that at some point.  Has kind of high system requirements considering how simple it is.  Any Core2Duo or newer should be fine, though.
 
 ## What are the controls?
 They're not really worth documenting yet, since there's no game to speak of.  You can move with the arrows and fire shots with spacebar.  There are no other keys right now.
