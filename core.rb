@@ -43,7 +43,7 @@ class GameState
 
   def update
     self.objects.each do |object|
-      object.update if object
+      object.update
     end
     self.objects.delete_if do |object|
       object.deleted?
@@ -52,7 +52,7 @@ class GameState
 
   def draw
     self.objects.each do |object|
-      object.draw if object
+      object.draw
     end
   end
 end
