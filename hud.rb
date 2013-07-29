@@ -10,6 +10,10 @@ class Hud < GameObject
   end
 
   def update
+    self.update_debug if DEBUG
+  end
+
+  def update_debug
     @player_shots = 0
     @enemy_shots = 0
     @enemies = 0
@@ -50,6 +54,6 @@ class Hud < GameObject
     @font.draw("Boost factor: #{@boost} Live player shots: #{@player_shots} Live enemies: #{@enemies}", 10, 10, 2) if DEBUG
     @font.draw("Health: #{@health} Live enemy shots: #{@enemy_shots}", 10, 28, 2) if DEBUG
     @font.draw("DEBUG MODE", 20, @window.height - 30, 2) if DEBUG
-    @font.draw("fps: #{Gosu::fps}", @window.width - 80, @window.height - 30, 2) if DEBUG
+    @font.draw("fps: #{Gosu::fps}", @window.width - 80, @window.height - 30, 2)
   end
 end

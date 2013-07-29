@@ -44,6 +44,14 @@ class Player < GameObject
         @live_shots += 1
       end 
     end
+
+    self.game.objects.each do |object|
+      if object.tags.include? "enemy_shot"
+        if Gosu::distance(object.x,object.y,@x,@y) < 10
+          @health -= 1
+        end
+      end
+    end
   end
 
   # This cycles our boost between three levels.

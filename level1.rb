@@ -8,7 +8,7 @@ class Level1 < GameState
     @objects.push(@hud)
     @objects.push(@bg)
     @objects.push(@player)
-    self.place_enemy # Setup our test enemies.
+    self.place_swarm # Setup our test enemies.
   end
 
   def button_down(id)
@@ -51,12 +51,12 @@ class Level1 < GameState
     self.objects.push(Enemy.new(self,450,300))
   end
 
-  # Used to stress-test.  We can get up to about 150 live enemies before we get slowdown, with about 300 live enemy bullets.
+  # Used to stress-test.
   def place_swarm
-    75.times do |i|
+    100.times do |i|
       self.objects.push(Enemy.new(self,450+i,140+i))
     end
-    75.times do |i|
+    100.times do |i|
       self.objects.push(Enemy.new(self,450+i,240+i))
     end
   end

@@ -1,7 +1,7 @@
 class Enemy < GameObject
   
-  attr_accessor :x
-  attr_accessor :y
+  attr_reader :x
+  attr_reader :y
 
   def initialize(game,origin_x,origin_y)
     super game
@@ -11,7 +11,7 @@ class Enemy < GameObject
     @prev_shot = 0
 
     @shot_speed = 4
-    @shot_freq = 1300
+    @shot_freq = 500
 
     # The gfx_shot is passed to the Shot object, it isn't actually rendered by the enemy itself.
     @gfx_ship = Gosu::Image.new(self.game.window,"./gfx/enemy.png",false)
@@ -24,6 +24,7 @@ class Enemy < GameObject
     self.game.objects.each do |object|
       if object.tags.include? "player_ship"
         @angle = Gosu::angle(@x,@y,object.x,object.y)
+        break
       end
     end
 
