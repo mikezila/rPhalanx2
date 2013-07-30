@@ -8,6 +8,7 @@ require './bg.rb'
 require './hud.rb'
 require './player.rb'
 require './enemy.rb'
+require './explosion.rb'
 
 # Our two gamestates.  'level2' is just a dummy at this point.
 require './level1.rb'

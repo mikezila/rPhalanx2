@@ -21,25 +21,30 @@ class Enemy < GameObject
   def fire
 
     # This uses the players location to choose the angle to fire the shot at.  It will go in a straight line towards where the player was when the shot was fired.
-    self.game.objects.each do |object|
-      if object.tags.include? "player_ship"
-        @angle = Gosu::angle(@x,@y,object.x,object.y)
-        break
-      end
-    end
+    @angle = Gosu::angle(@x,@y,self.game.player.x,self.game.player.y)
 
-    # Throttle the shots, so the enemy isn't just going HAM the whole time.
+    # Throttle the shots, so the enemy isn't just going HAM the whole time.  Variables for this are set in the contstructor.
     if Gosu::milliseconds - @prev_shot > @shot_freq
       self.game.objects.push(Shot.new(self.game,"enemy_shot",@gfx_shot,@x,@y+5,@angle,@shot_speed))
       @prev_shot = Gosu::milliseconds
     end
   end
 
+  # Try to fire every frame, the fire method will handle the throttling.
   def update
     self.fire
+
+    self.game.player.shots.each do |object|
+      if Gosu::distance(self.x,self.y,object.x,object.y) < 10
+        self.delete
+        object.delete
+        self.game.objects.push(Explosion.new(self.game,object.x,object.y))
+      end
+    end
   end
 
+  # Simple draw.
   def draw
-    @gfx_ship.draw(@x,@y,2)
+    @gfx_ship.draw(@x,@y,Zorder::Enemy)
   end
 end

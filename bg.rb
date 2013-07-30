@@ -43,8 +43,8 @@ class Layer
   end
 
   def draw
-    @gfx.draw(@x,@y,0)
-    @gfx.draw(@x+640,@y,0)
+    @gfx.draw(@x,@y,Zorder::Background)
+    @gfx.draw(@x+640,@y,Zorder::Background)
   end
 
   def update

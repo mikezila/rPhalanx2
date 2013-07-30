@@ -4,8 +4,7 @@ class Hud < GameObject
 
   def initialize(game)
     super game
-    @window = self.game.window
-    @font = Gosu::Font.new(@window,"./gfx/AGENCYR.ttf",26)
+    @font = Gosu::Font.new(self.game.window,"./gfx/AGENCYR.ttf",26)
     @tags.push("hud")
   end
 
@@ -22,27 +21,19 @@ class Hud < GameObject
       if object.tags.include? "enemy_shot"
         @enemy_shots += 1
       end
-    end
 
-    self.game.objects.each do |object|
       if object.tags.include? "enemy_ship"
         @enemies += 1
       end
-    end
 
-    self.game.objects.each do |object|
       if object.tags.include? "player_shot"
         @player_shots += 1
       end
-    end
 
-    self.game.objects.each do |object|
       if object.tags.include? "player_ship"
         @health = object.health
       end
-    end
 
-    self.game.objects.each do |object|
       if object.tags.include? "player_ship"
         @boost = object.boost
       end
@@ -51,9 +42,9 @@ class Hud < GameObject
 
   def draw
     # Since this is all debugging information, only display it if DEBUG is on.
-    @font.draw("Boost factor: #{@boost} Live player shots: #{@player_shots} Live enemies: #{@enemies}", 10, 10, 2) if DEBUG
-    @font.draw("Health: #{@health} Live enemy shots: #{@enemy_shots}", 10, 28, 2) if DEBUG
-    @font.draw("DEBUG MODE", 20, @window.height - 30, 2) if DEBUG
-    @font.draw("fps: #{Gosu::fps}", @window.width - 80, @window.height - 30, 2)
+    @font.draw("Boost factor: #{@boost} Live player shots: #{@player_shots} Live enemies: #{@enemies}", 10, 10, Zorder::HUD) if DEBUG
+    @font.draw("Health: #{@health} Live enemy shots: #{@enemy_shots}", 10, 28, Zorder::HUD) if DEBUG
+    @font.draw("DEBUG MODE", 20, self.game.window.height - 30, Zorder::HUD) if DEBUG
+    @font.draw("fps: #{Gosu::fps}", self.game.window.width - 80, self.game.window.height - 30, Zorder::HUD)
   end
 end

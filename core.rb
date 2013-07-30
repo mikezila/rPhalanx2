@@ -23,6 +23,10 @@ class GameObject
   def update
   end
 
+  def delete
+    @deleted = true
+  end
+
   def deleted?
     @deleted
   end
@@ -58,4 +62,13 @@ class GameState
       object.draw
     end
   end
+end
+
+module Zorder
+  Background = 0
+  Enemy = 1
+  Player = 2
+  Shot = 3
+  Effects = 4
+  HUD = 5
 end

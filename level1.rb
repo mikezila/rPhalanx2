@@ -1,5 +1,7 @@
 class Level1 < GameState
 
+  attr_reader :player
+
   def initialize(window)
     super window
     @hud = Hud.new(self)
@@ -51,13 +53,18 @@ class Level1 < GameState
     self.objects.push(Enemy.new(self,450,300))
   end
 
-  # Used to stress-test.
+  # Used to stress-test, spawns a ton of enemies that all stand and fire.
   def place_swarm
-    100.times do |i|
-      self.objects.push(Enemy.new(self,450+i,140+i))
-    end
-    100.times do |i|
-      self.objects.push(Enemy.new(self,450+i,240+i))
+    x = 150
+    y = 10
+    spacing = 20
+    400.times do
+      self.objects.push(Enemy.new(self,x,y))
+      y += spacing
+      if y > self.window.height - 30
+        y = 10
+        x += 40
+      end
     end
   end
 

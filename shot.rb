@@ -4,7 +4,6 @@ class Shot < GameObject
   attr_reader :y
   attr_reader :angle
   attr_reader :speed
-  attr_reader :tag
 
   def initialize(game,tag,gfx,origin_x,origin_y,angle,speed)
     super game
@@ -31,6 +30,6 @@ class Shot < GameObject
 
   def draw
     # The simplest draw that there ever was.  Since all of the movement is handled above, just need to draw at x and y and done.
-    @gfx.draw(@x,@y,1)
+    @gfx.draw(@x,@y,Zorder::Shot)
   end
 end
