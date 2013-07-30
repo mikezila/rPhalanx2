@@ -17,7 +17,12 @@ Just Ruby and the Gosu gem.  If you're on Windows use Ruby 1.9.3, as Gosu doesn'
 I presume it'll work on Ruby 2.0 as well if you're using OS X or Linux, but I haven't tested it.
 
 ## Known Issues
-I don't do resource loading like I should, so it might not work for you due to working directory nonsense.  Sorry.  I'll fix that at some point.  Has kind of high system requirements considering how simple it is.  Any Core2Duo or newer should be fine, though.
+I don't do resource loading like I should, so it might not work for you due to working directory nonsense.  Sorry.  I'll fix that at some point.
 
 ## What are the controls?
-They're not really worth documenting yet, since there's no game to speak of.  You can move with the arrows and fire shots with spacebar.  There are no other keys right now.
+They're not really worth documenting yet, since there's no game to speak of.  You can move with the arrows and fire shots with spacebar.  Press B to cycle through the three levels of movement boost.  There are no other keys right now.  You can destroy the enemies, but no more will spawn, and your health just keeps going negative instead of you blowing up.  Like I said, not really a game yet.
+
+## What's so special about this?
+Nothing really.  I am somewhat proud of the tagging system I'm using, even if it is very simple.  Every game object has a list of plain text tags.  Things like "shot", "enemy_ship", or "asparagus".  Since all gameobjects are stored in the same array (with singlular exception of the player's own bullets) you can iterate over the array and send method calls to just the objects you want by checking for the tags you want.  The performance of this is surprisingly decent, so long as the number of objects checking for tags each frame is under a hundred or so, and the total number of objects is under about a thousand.  Even the most hell-ish bullet hell wouldn't have that many enemies on screen at a time, so I'd say it's fine for smaller games.
+
+I got the inspriation from Unity3D, which uses a similar tagging system.  This isn't anything super-clever, but I wanted to see if it would work well in Ruby game.  So long as you are smart with it and don't go overboard it seems to work well.
