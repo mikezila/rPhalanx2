@@ -4,6 +4,8 @@
 class Explosion < GameObject
   def initialize(game,x,y)
     super game
+    @tags.push("explosion")
+    @tags.push("effects")
     @gfx = Gosu::Image.load_tiles(self.game.window,'./gfx/boom.png',129,196,false)
     @x = x
     @y = y

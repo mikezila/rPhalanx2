@@ -34,6 +34,7 @@ class Enemy < GameObject
   def update
     self.fire
 
+    # Check to see if we're hit, and if so, kill ourselves and the bullet that hit us, and leave behind an explosion. Boom!
     self.game.player.shots.each do |object|
       if Gosu::distance(self.x,self.y,object.x,object.y) < 10
         self.delete
