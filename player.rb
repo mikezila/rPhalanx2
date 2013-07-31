@@ -88,7 +88,7 @@ class Player < GameObject
 
   # Simple draw method, the @state is used to pick the sprite from our array according to our animation state.
   def draw
-    @gfx_ship[@state].draw(@x,@y,Zorder::Player)
+    @gfx_ship[@state].draw_rot(@x,@y,Zorder::Player,0)
     self.shots.each do |shot|
       shot.draw
     end

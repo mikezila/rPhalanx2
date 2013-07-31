@@ -30,6 +30,6 @@ class Shot < GameObject
 
   def draw
     # The simplest draw that there ever was.  Since all of the movement is handled above, just need to draw at x and y and done.
-    @gfx.draw(@x,@y,Zorder::Shot)
+    @gfx.draw_rot(@x,@y,Zorder::Shot,0)
   end
 end

@@ -11,7 +11,7 @@ class Enemy < GameObject
     @prev_shot = 0
 
     @shot_speed = 4
-    @shot_freq = 500
+    @shot_freq = 1500
 
     # The gfx_shot is passed to the Shot object, it isn't actually rendered by the enemy itself.
     @gfx_ship = Gosu::Image.new(self.game.window,"./gfx/enemy.png",false)
@@ -21,11 +21,11 @@ class Enemy < GameObject
   def fire
 
     # This uses the players location to choose the angle to fire the shot at.  It will go in a straight line towards where the player was when the shot was fired.
-    @angle = Gosu::angle(@x,@y,self.game.player.x,self.game.player.y)
+    @angle = Gosu::angle(@x-18,@y-5,self.game.player.x,self.game.player.y)
 
     # Throttle the shots, so the enemy isn't just going HAM the whole time.  Variables for this are set in the contstructor.
     if Gosu::milliseconds - @prev_shot > @shot_freq
-      self.game.objects.push(Shot.new(self.game,"enemy_shot",@gfx_shot,@x,@y+5,@angle,@shot_speed))
+      self.game.objects.push(Shot.new(self.game,"enemy_shot",@gfx_shot,@x-18,@y-5,@angle,@shot_speed))
       @prev_shot = Gosu::milliseconds
     end
   end
@@ -45,6 +45,6 @@ class Enemy < GameObject
 
   # Simple draw.
   def draw
-    @gfx_ship.draw(@x,@y,Zorder::Enemy)
+    @gfx_ship.draw_rot(@x,@y,Zorder::Enemy,0)
   end
 end

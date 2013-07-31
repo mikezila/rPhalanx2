@@ -10,7 +10,7 @@ class Level1 < GameState
     @objects.push(@hud)
     @objects.push(@bg)
     @objects.push(@player)
-    self.place_swarm # Setup our test enemies.
+    self.place_enemy # Setup our test enemies.
   end
 
   def button_down(id)
@@ -58,7 +58,7 @@ class Level1 < GameState
     x = 150
     y = 10
     spacing = 20
-    400.times do
+    250.times do
       self.objects.push(Enemy.new(self,x,y))
       y += spacing
       if y > self.window.height - 30
