@@ -1,4 +1,4 @@
-# rPhalanx2
+# rPhalanx 2
 
 ## What is this?
 It's a very early and equally poor re-make of the SNES/GBA/ancient Sharp PC game Phalanx.  A game that is mostly famous for having an old guy with a banjo on the north american SNES box art.
