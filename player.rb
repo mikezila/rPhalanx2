@@ -12,19 +12,19 @@ class Player < GameObject
     @gfx_shot = Gosu::Image.new(game.window,"./gfx/shot.png",false)
     @tags.push("player_ship")
     @state = 2
-    @boost = 2
+    @boost = 3
     @health = 3
     @x = self.game.window.width / 4
     @y = self.game.window.height / 2
     @prev_shot = 0
-    @shots_budget = 4
+    @shots_budget = 6
     @shots = Array.new
   end
 
   # Looks complicated, but isn't.  Lets us fire every 60 milliseconds, but only if we're under budget for how many shots we're allowed.
   def fire
     if Gosu::milliseconds - @prev_shot > 60
-      self.shots.push(Shot.new(self.game,"player_shot",@gfx_shot,@x+22,@y+6,90,10)) unless @live_shots >= @shots_budget
+      self.shots.push(Shot.new(self.game,"player_shot",@gfx_shot,@x+8,@y,90,10)) unless @live_shots >= @shots_budget
       @prev_shot = Gosu::milliseconds
     end
   end
@@ -60,8 +60,8 @@ class Player < GameObject
 
   # This cycles our boost between three levels.
   def boost_change
-    if @boost == 4
-      @boost = 2
+    if @boost == 5
+      @boost = 3
     else
       @boost += 1
     end

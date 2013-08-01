@@ -10,7 +10,6 @@ class Level1 < GameState
     @objects.push(@hud)
     @objects.push(@bg)
     @objects.push(@player)
-    self.place_enemy # Setup our test enemies.
   end
 
   def button_down(id)
@@ -44,16 +43,35 @@ class Level1 < GameState
     @player.rest
   end
 
-  def place_enemy
-    # These dummies are just for testing, they stand and fire, nothing else.
-    self.objects.push(Enemy.new(self,450,140))
-    self.objects.push(Enemy.new(self,450,180))
-    self.objects.push(Enemy.new(self,450,220))
-    self.objects.push(Enemy.new(self,450,260))
-    self.objects.push(Enemy.new(self,450,300))
+  def debug_spawn(max)
+    roll = Random.new
+    left_bound = self.window.width + 10
+    right_bound = self.window.width + 20
+    up_bound = 10
+    bottom_bound = self.window.height - 20
+    enemies = 0
+
+    self.objects.each do |object|
+      if object.tags.include? "enemy_ship"
+        enemies += 1
+      end
+    end
+
+    if enemies < max
+      self.objects.push(Enemy.new(self,roll.rand(left_bound..right_bound),roll.rand(up_bound..bottom_bound)))
+    end
   end
 
-  # Used to stress-test, spawns a ton of enemies that all stand and fire.
+  def place_enemy
+    # These dummies are just for testing.
+    self.objects.push(Enemy.new(self,220,140))
+    self.objects.push(Enemy.new(self,280,180))
+    self.objects.push(Enemy.new(self,320,220))
+    self.objects.push(Enemy.new(self,380,260))
+    self.objects.push(Enemy.new(self,420,300))
+  end
+
+  # Used to stress-test.
   def place_swarm
     x = 150
     y = 10
@@ -70,6 +88,7 @@ class Level1 < GameState
 
   def update
     super
+    self.debug_spawn(10)
   end
 
   def draw

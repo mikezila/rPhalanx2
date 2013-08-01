@@ -9,9 +9,10 @@ class Enemy < GameObject
     @x = origin_x
     @y = origin_y
     @prev_shot = 0
+    @move_speed = 2
 
-    @shot_speed = 4
-    @shot_freq = 1500
+    @shot_speed = 3
+    @shot_freq = 1800
 
     # The gfx_shot is passed to the Shot object, it isn't actually rendered by the enemy itself.
     @gfx_ship = Gosu::Image.new(self.game.window,"./gfx/enemy.png",false)
@@ -30,13 +31,26 @@ class Enemy < GameObject
     end
   end
 
-  # Try to fire every frame, the fire method will handle the throttling.
   def update
+
+    # Mark ourselves as deleted if we're off the left side of the screen.
+    self.delete if @x < -15
+
+    # Try to fire every frame, the fire method will handle the throttling.
     self.fire
+
+    # Try to get level with the player.
+    if self.y > self.game.player.y
+      @y -= 1 * @move_speed / 2 unless self.x <= self.game.window.width / 2
+    elsif self.y < self.game.player.y
+      @y += 1 * @move_speed / 2 unless self.x <= self.game.window.width / 2
+    end
+
+    @x -= 1 * @move_speed
 
     # Check to see if we're hit, and if so, kill ourselves and the bullet that hit us, and leave behind an explosion. Boom!
     self.game.player.shots.each do |object|
-      if Gosu::distance(self.x,self.y,object.x,object.y) < 10
+      if Gosu::distance(self.x,self.y,object.x,object.y) < 20
         self.delete
         object.delete
         self.game.objects.push(Explosion.new(self.game,object.x,object.y))
