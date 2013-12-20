@@ -4,7 +4,7 @@ class Hud < GameObject
 
   def initialize(game)
     super game
-    @font = Gosu::Font.new(self.game.window,"./gfx/AGENCYR.ttf",26)
+    @font = Gosu::Font.new(self.game.window,"./gfx/AGENCYR.TTF",26)
     @tags.push("hud")
   end
 
