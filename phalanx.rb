@@ -23,6 +23,17 @@ class Game < Gosu::Window
     @states.push(Level1.new(self))
     @states.push(Level2.new(self))
     @current_state = 0
+    @keybings = {
+      Gosu::KbLeft    => :left,
+      Gosu::KbRight   => :right,
+      Gosu::KbUp      => :up,
+      Gosu::KbDown    => :down,
+      Gosu::KbSpace   => :space,
+      Gosu::GpLeft    => :left,
+      Gosu::GpRight   => :right,
+      Gosu::GpUp      => :up,
+      Gosu::GpDown    => :down,
+      Gosu::GpButton0 => :space }
   end
 
   # Game doesn't actually use the mouse, but I don't like my cursor being hidden.
@@ -45,20 +56,10 @@ class Game < Gosu::Window
   end
 
   def update
-    if button_down? Gosu::KbLeft or button_down? Gosu::GpLeft
-      current_state.left
-    end
-    if button_down? Gosu::KbRight or button_down? Gosu::GpRight
-      current_state.right
-    end
-    if button_down? Gosu::KbUp or button_down? Gosu::GpUp
-      current_state.up
-    end
-    if button_down? Gosu::KbDown or button_down? Gosu::GpDown
-      current_state.down
-    end
-    if button_down? Gosu::KbSpace or button_down? Gosu::GpButton0
-      current_state.space
+    @keybings.each do |key, action|
+      if button_down? key
+        current_state.send action
+      end
     end
 
     unless button_down? Gosu::KbUp or button_down? Gosu::GpUp or button_down? Gosu::KbDown or button_down? Gosu::GpDown
