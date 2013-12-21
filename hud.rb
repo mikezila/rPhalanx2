@@ -27,10 +27,7 @@ class Hud < GameObject
 
       if object.tags.include? "player_ship"
         @health = object.health
-      end
-
-      if object.tags.include? "player_ship"
-        @boost = object.boost
+        @boost  = object.boost
       end
     end
   end
