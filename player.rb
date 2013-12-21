@@ -41,12 +41,8 @@ class Player < GameObject
   # Keep track of the number of live player shots, so we can throttle how many we're allowed at once.
   def update
     @live_shots = shots.length
-    shots.each do |shot|
-      shot.update
-    end
-    shots.delete_if do |shot|
-      shot.deleted?
-    end
+    shots.each &:update
+    shots.delete_if &:deleted?
 
     game.objects.each do |object|
       if object.tags.include? "enemy_shot"
@@ -89,8 +85,6 @@ class Player < GameObject
   # Simple draw method, the @state is used to pick the sprite from our array according to our animation state.
   def draw
     @gfx_ship[@state].draw_rot(@x,@y,Zorder::Player,0)
-    shots.each do |shot|
-      shot.draw
-    end
+    shots.each &:draw
   end
 end

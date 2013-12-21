@@ -18,16 +18,12 @@ class Background < GameObject
 
 
   def draw
-    @layers.each do |layer|
-      layer.draw
-    end
+    @layers.each &:draw
   end
 
 
   def update
-    @layers.each do |layer|
-      layer.update
-    end
+    @layers.each &:update
   end
 end
 
