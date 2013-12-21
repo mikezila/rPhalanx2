@@ -44,9 +44,7 @@ class Layer
   end
 
   def update
-    @scroll_speed.times do
-      @x = -1 if @x == -640
-      @x -= 1
-    end
+    @x -= @scroll_speed
+    @x %= -640
   end
 end
