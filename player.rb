@@ -39,11 +39,8 @@ class Player < GameObject
 
   # This is called whenever there are no movement buttons held down, so that the ship returns to a neutral position after animating going up/down.
   def rest
-    if @state > 2
-      @state -= 1
-    elsif @state < 2
-      @state += 1
-    end
+    @state -= 1 if @state > 2
+    @state += 1 if @state < 2
   end
 
   # Keep track of the number of live player shots, so we can throttle how many we're allowed at once.
