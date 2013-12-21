@@ -19,15 +19,23 @@ class Enemy < GameObject
     @gfx_shot = Gosu::Image.new(game.window,"./gfx/enemy_shot.png",false)
   end
 
+  def new_shot
+    @prev_shot_time = Gosu::milliseconds
+    Shot.new(game,"enemy_shot",@gfx_shot,@x-18,@y-5,@angle,@shot_speed)
+  end
+
+  def shot_elapsed
+    Gosu::milliseconds - @prev_shot_time
+  end
+
   def fire
 
     # This uses the players location to choose the angle to fire the shot at.  It will go in a straight line towards where the player was when the shot was fired.
     @angle = Gosu::angle(@x-18,@y-5,game.player.x,game.player.y)
 
     # Throttle the shots, so the enemy isn't just going HAM the whole time.  Variables for this are set in the contstructor.
-    if Gosu::milliseconds - @prev_shot_time > @shot_freq
-      game.objects.push(Shot.new(game,"enemy_shot",@gfx_shot,@x-18,@y-5,@angle,@shot_speed))
-      @prev_shot_time = Gosu::milliseconds
+    if shot_elapsed > @shot_freq
+      game.objects.push(new_shot)
     end
   end
 
