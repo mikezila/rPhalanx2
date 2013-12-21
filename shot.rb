@@ -24,7 +24,7 @@ class Shot < GameObject
   
     # This marks any bulle that has flown off the visible area as deleted, meaning it'll be destroyed next update cycle.
     if x > game.window.width or x < 0 or y > game.window.height or y < 0
-      @deleted = true
+      delete
     end
   end
 
