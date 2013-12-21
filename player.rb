@@ -16,21 +16,21 @@ class Player < GameObject
     @health = 3
     @x = game.window.width / 4
     @y = game.window.height / 2
-    @prev_shot = 0
+    @prev_shot_time = 0
     @shots_budget = 6
     @shots = Array.new
   end
 
   def new_shot
-    @prev_shot = Gosu::milliseconds
+    @prev_shot_time = Gosu::milliseconds
     Shot.new(game,"player_shot",@gfx_shot,@x+8,@y,90,10)
   end
 
   def shot_elapsed
-    Gosu::milliseconds - @prev_shot
+    Gosu::milliseconds - @prev_shot_time
   end
 
-  # Looks complicated, but isn't.  Lets us fire every 60 milliseconds, but only if we're under budget for how many shots we're allowed.
+  # Now it doesn't even Looks complicated.  Lets us fire every 60 milliseconds, but only if we're under budget for how many shots we're allowed.
   def fire
     if shot_elapsed > 60
       shots.push(new_shot) unless @live_shots >= @shots_budget
