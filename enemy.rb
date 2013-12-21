@@ -57,11 +57,11 @@ class Enemy < GameObject
     @x -= 1 * @move_speed
 
     # Check to see if we're hit, and if so, kill ourselves and the bullet that hit us, and leave behind an explosion. Boom!
-    game.player.shots.each do |object|
-      if Gosu::distance(x,y,object.x,object.y) < 20
+    game.player.shots.each do |shot|
+      if Gosu::distance(x,y,shot.x,shot.y) < 20
         delete
-        object.delete
-        game.objects.push(Explosion.new(game,object.x,object.y))
+        shot.delete
+        game.objects.push(Explosion.new(game,shot.x,shot.y))
       end
     end
   end
