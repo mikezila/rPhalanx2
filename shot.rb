@@ -23,7 +23,7 @@ class Shot < GameObject
     @y += Gosu::offset_y(@angle, 1 * @speed)
   
     # This marks any bulle that has flown off the visible area as deleted, meaning it'll be destroyed next update cycle.
-    if self.x > self.game.window.width or self.x < 0 or self.y > self.game.window.height or self.y < 0
+    if x > game.window.width or x < 0 or y > game.window.height or y < 0
       @deleted = true
     end
   end

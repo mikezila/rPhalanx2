@@ -8,14 +8,14 @@ class Player < GameObject
 
   def initialize(game)
     super game
-    @gfx_ship = Gosu::Image.load_tiles(self.game.window,"./gfx/ship.png",22,16,false)
+    @gfx_ship = Gosu::Image.load_tiles(game.window,"./gfx/ship.png",22,16,false)
     @gfx_shot = Gosu::Image.new(game.window,"./gfx/shot.png",false)
     @tags.push("player_ship")
     @state = 2
     @boost = 3
     @health = 3
-    @x = self.game.window.width / 4
-    @y = self.game.window.height / 2
+    @x = game.window.width / 4
+    @y = game.window.height / 2
     @prev_shot = 0
     @shots_budget = 6
     @shots = Array.new
@@ -24,7 +24,7 @@ class Player < GameObject
   # Looks complicated, but isn't.  Lets us fire every 60 milliseconds, but only if we're under budget for how many shots we're allowed.
   def fire
     if Gosu::milliseconds - @prev_shot > 60
-      self.shots.push(Shot.new(self.game,"player_shot",@gfx_shot,@x+8,@y,90,10)) unless @live_shots >= @shots_budget
+      shots.push(Shot.new(game,"player_shot",@gfx_shot,@x+8,@y,90,10)) unless @live_shots >= @shots_budget
       @prev_shot = Gosu::milliseconds
     end
   end
@@ -40,15 +40,15 @@ class Player < GameObject
 
   # Keep track of the number of live player shots, so we can throttle how many we're allowed at once.
   def update
-    @live_shots = self.shots.length
-    self.shots.each do |shot|
+    @live_shots = shots.length
+    shots.each do |shot|
       shot.update
     end
-    self.shots.delete_if do |shot|
+    shots.delete_if do |shot|
       shot.deleted?
     end
 
-    self.game.objects.each do |object|
+    game.objects.each do |object|
       if object.tags.include? "enemy_shot"
         if Gosu::distance(object.x,object.y,@x,@y) < 10
           @health -= 1
@@ -89,7 +89,7 @@ class Player < GameObject
   # Simple draw method, the @state is used to pick the sprite from our array according to our animation state.
   def draw
     @gfx_ship[@state].draw_rot(@x,@y,Zorder::Player,0)
-    self.shots.each do |shot|
+    shots.each do |shot|
       shot.draw
     end
   end

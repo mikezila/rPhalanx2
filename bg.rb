@@ -4,7 +4,7 @@ class Background < GameObject
 
   def initialize(game)
     super game
-    window = self.game.window
+    window = game.window
     gfx1 = Gosu::Image.new(window,"./gfx/bg1.png",false)
     gfx2 = Gosu::Image.new(window,"./gfx/bg2.png",false)
     gfx3 = Gosu::Image.new(window,"./gfx/bg3.png",false)

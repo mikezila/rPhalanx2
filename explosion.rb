@@ -6,7 +6,7 @@ class Explosion < GameObject
     super game
     @tags.push("explosion")
     @tags.push("effects")
-    @gfx = Gosu::Image.load_tiles(self.game.window,'./gfx/boom.png',129,196,false)
+    @gfx = Gosu::Image.load_tiles(game.window,'./gfx/boom.png',129,196,false)
     @x = x
     @y = y
     @frame = 9
@@ -26,7 +26,7 @@ class Explosion < GameObject
 
   # Also using scaling because if you're going to make a shit sandwich might as well put extra shit on it.
   def draw
-    self.game.window.scale(0.3,0.3,@x,@y){
+    game.window.scale(0.3,0.3,@x,@y){
       @gfx[@frame].draw_rot(@x,@y,Zorder::Effects,0)
     }
   end
