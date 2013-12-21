@@ -21,10 +21,14 @@ class Player < GameObject
     @shots = Array.new
   end
 
+  def new_shot
+    Shot.new(game,"player_shot",@gfx_shot,@x+8,@y,90,10)
+  end
+
   # Looks complicated, but isn't.  Lets us fire every 60 milliseconds, but only if we're under budget for how many shots we're allowed.
   def fire
     if Gosu::milliseconds - @prev_shot > 60
-      shots.push(Shot.new(game,"player_shot",@gfx_shot,@x+8,@y,90,10)) unless @live_shots >= @shots_budget
+      shots.push(new_shot) unless @live_shots >= @shots_budget
       @prev_shot = Gosu::milliseconds
     end
   end
