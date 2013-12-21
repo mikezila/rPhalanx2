@@ -8,7 +8,7 @@ class Enemy < GameObject
     @tags.push("enemy_ship")
     @x = origin_x
     @y = origin_y
-    @prev_shot = 0
+    @prev_shot_time = 0
     @move_speed = 2
 
     @shot_speed = 3
@@ -25,9 +25,9 @@ class Enemy < GameObject
     @angle = Gosu::angle(@x-18,@y-5,game.player.x,game.player.y)
 
     # Throttle the shots, so the enemy isn't just going HAM the whole time.  Variables for this are set in the contstructor.
-    if Gosu::milliseconds - @prev_shot > @shot_freq
+    if Gosu::milliseconds - @prev_shot_time > @shot_freq
       game.objects.push(Shot.new(game,"enemy_shot",@gfx_shot,@x-18,@y-5,@angle,@shot_speed))
-      @prev_shot = Gosu::milliseconds
+      @prev_shot_time = Gosu::milliseconds
     end
   end
 
