@@ -49,18 +49,12 @@ class GameState
   end
 
   def update
-    self.objects.each do |object|
-      object.update
-    end
-    self.objects.delete_if do |object|
-      object.deleted?
-    end
+    objects.each &:update
+    objects.delete_if &:deleted?
   end
 
   def draw
-    self.objects.each do |object|
-      object.draw
-    end
+    objects.each &:draw
   end
 end
 

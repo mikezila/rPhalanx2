@@ -23,6 +23,18 @@ class Game < Gosu::Window
     @states.push(Level1.new(self))
     @states.push(Level2.new(self))
     @current_state = 0
+    @keybings = {
+      Gosu::KbLeft    => :left,
+      Gosu::KbRight   => :right,
+      Gosu::KbUp      => :up,
+      Gosu::KbDown    => :down,
+      Gosu::KbSpace   => :space,
+      Gosu::GpLeft    => :left,
+      Gosu::GpRight   => :right,
+      Gosu::GpUp      => :up,
+      Gosu::GpDown    => :down,
+      Gosu::GpButton0 => :space }
+    @non_resting_keys = [Gosu::KbUp, Gosu::GpUp, Gosu::KbDown, Gosu::GpDown]
   end
 
   # Game doesn't actually use the mouse, but I don't like my cursor being hidden.
@@ -30,41 +42,33 @@ class Game < Gosu::Window
     true
   end
 
+  def current_state
+    @states[@current_state]
+  end
+
   def button_down(id)
-    if id == Gosu::KbEscape
-      self.close
-    end
-    @states[@current_state].button_down(id)
+    close if id == Gosu::KbEscape
+    current_state.button_down(id)
   end
 
   def draw
     # Forward drawing to the current gamestate.
-    @states[@current_state].draw
+    current_state.draw
   end
 
   def update
-    if button_down? Gosu::KbLeft or button_down? Gosu::GpLeft
-      @states[@current_state].left
-    end
-    if button_down? Gosu::KbRight or button_down? Gosu::GpRight
-      @states[@current_state].right
-    end
-    if button_down? Gosu::KbUp or button_down? Gosu::GpUp
-      @states[@current_state].up
-    end
-    if button_down? Gosu::KbDown or button_down? Gosu::GpDown
-      @states[@current_state].down
-    end
-    if button_down? Gosu::KbSpace or button_down? Gosu::GpButton0
-      @states[@current_state].space
+    resting = true
+    @keybings.each do |key, action|
+      if button_down? key
+        current_state.send action
+        resting = false if @non_resting_keys.include? key
+      end
     end
 
-    unless button_down? Gosu::KbUp or button_down? Gosu::GpUp or button_down? Gosu::KbDown or button_down? Gosu::GpDown
-      @states[@current_state].rest
-    end
+    current_state.rest if resting
 
     # Forward updating to the current gamestate.
-    @states[@current_state].update
+    current_state.update
   end
 end
 

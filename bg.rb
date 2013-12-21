@@ -4,7 +4,7 @@ class Background < GameObject
 
   def initialize(game)
     super game
-    window = self.game.window
+    window = game.window
     gfx1 = Gosu::Image.new(window,"./gfx/bg1.png",false)
     gfx2 = Gosu::Image.new(window,"./gfx/bg2.png",false)
     gfx3 = Gosu::Image.new(window,"./gfx/bg3.png",false)
@@ -18,16 +18,12 @@ class Background < GameObject
 
 
   def draw
-    @layers.each do |layer|
-      layer.draw
-    end
+    @layers.each &:draw
   end
 
 
   def update
-    @layers.each do |layer|
-      layer.update
-    end
+    @layers.each &:update
   end
 end
 
@@ -48,9 +44,7 @@ class Layer
   end
 
   def update
-    @scroll_speed.times do
-      @x = -1 if @x == -640
-      @x -= 1
-    end
+    @x -= @scroll_speed
+    @x %= -640
   end
 end
