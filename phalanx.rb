@@ -34,6 +34,7 @@ class Game < Gosu::Window
       Gosu::GpUp      => :up,
       Gosu::GpDown    => :down,
       Gosu::GpButton0 => :space }
+    @non_resting_keys = [Gosu::KbUp, Gosu::GpUp, Gosu::KbDown, Gosu::GpDown]
   end
 
   # Game doesn't actually use the mouse, but I don't like my cursor being hidden.
@@ -56,15 +57,15 @@ class Game < Gosu::Window
   end
 
   def update
+    resting = true
     @keybings.each do |key, action|
       if button_down? key
         current_state.send action
+        resting = false if @non_resting_keys.include? key
       end
     end
 
-    unless button_down? Gosu::KbUp or button_down? Gosu::GpUp or button_down? Gosu::KbDown or button_down? Gosu::GpDown
-      current_state.rest
-    end
+    current_state.rest if resting
 
     # Forward updating to the current gamestate.
     current_state.update
